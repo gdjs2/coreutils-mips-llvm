@@ -57,13 +57,16 @@ export LD="${CLANG_DIR}/bin/ld.lld"
 export RANLIB="${CLANG_DIR}/bin/llvm-ranlib"
 export STRIP="${CLANG_DIR}/bin/llvm-strip"
 
-export CFLAGS="--target=mips-linux-gnu -march=mips32 -mabi=32 -O2"
+export CFLAGS="--target=mips-linux-gnu -march=mips32 -mabi=32 -O0 -fPIC -fno-jump-tables --gcc-toolchain=/usr"
 export CXXFLAGS="${CFLAGS}"
-export LDFLAGS="--target=mips-linux-gnu -fuse-ld=lld"
+export LDFLAGS="--target=mips-linux-gnu --gcc-toolchain=/usr"
 
 ../configure \
     --host=mips-linux-gnu \
     --build=x86_64-linux-gnu \
+    --disable-acl \
+    --disable-xattr \
+    --disable-nls
 
 echo ""
 echo "Building coreutils..."
@@ -98,4 +101,4 @@ echo ""
 echo "To verify:"
 echo "  file ${OUTPUT_NONSTRIPPED}/usr/local/bin/ls"
 echo "  file ${OUTPUT_STRIPPED}/usr/local/bin/ls"
-echo "  arm-linux-gnueabihf-readelf -h ${OUTPUT_STRIPPED}/usr/local/bin/ls | grep Flags"
+echo "  ${CLANG_DIR}/bin/llvm-readelf -h ${OUTPUT_STRIPPED}/usr/local/bin/ls | grep -E '(Machine|Flags)'"
