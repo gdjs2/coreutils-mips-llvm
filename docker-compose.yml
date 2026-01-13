@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  arm-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+        USERNAME: ${USERNAME}
+    image: mips-cross-compiler-llvm:latest
+    container_name: mips-coreutils-builder-llvm
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    command: /bin/bash
