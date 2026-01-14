@@ -57,16 +57,13 @@ export LD="${CLANG_DIR}/bin/ld.lld"
 export RANLIB="${CLANG_DIR}/bin/llvm-ranlib"
 export STRIP="${CLANG_DIR}/bin/llvm-strip"
 
-export CFLAGS="--target=mips-linux-gnu -march=mips32 -mabi=32 -O0 -fPIC -fno-jump-tables --gcc-toolchain=/usr"
+export CFLAGS="--target=mips-linux-gnu -march=mips32 -mabi=32 -O2 --gcc-toolchain=/usr"
 export CXXFLAGS="${CFLAGS}"
 export LDFLAGS="--target=mips-linux-gnu --gcc-toolchain=/usr"
 
 ../configure \
     --host=mips-linux-gnu \
     --build=x86_64-linux-gnu \
-    --disable-acl \
-    --disable-xattr \
-    --disable-nls
 
 echo ""
 echo "Building coreutils..."
